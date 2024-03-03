@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Form</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  .error {
+    color: red;
+  }
+  .success {
+    color: green;
+  }
+</style>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form id="signupForm" class="border p-4 rounded">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" id="email" name="email" class="form-control" required placeholder="Example@email.com">
+          <span id="emailError" class="error"></span>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" id="password" name="password" class="form-control" required placeholder="Your Password">
+          <span id="passwordError" class="error"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  if (validateEmail(email) && validatePassword(password)) {
+    if (confirm("Do you want to sign up?")) {
+      alert("Successful signup!");
+    } else {
+      
+      document.getElementById('email').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+    }
+  }
+});
+
+document.getElementById('email').addEventListener('input', function() {
+  const email = this.value;
+  const emailError = document.getElementById('emailError');
+  if (email.length < 3 || !email.includes('@') || !email.includes('.')) {
+    emailError.textContent = "Make sure email has more than 3 characters and has @ and a .";
+  } else {
+    emailError.textContent = '';
+  }
+});
+
+document.getElementById('password').addEventListener('input', function() {
+  const password = this.value;
+  const passwordError = document.getElementById('passwordError');
+  if (password.length < 8) {
+    passwordError.textContent = "Make sure Password is more than 8 characters";
+  } else {
+    passwordError.textContent = '';
+  }
+});
+
+function validateEmail(email) {
+  return email.length >= 3 && email.includes('@') && email.includes('.');
+}
+
+function validatePassword(password) {
+  return password.length >= 8;
+}
+</script>
+
+</body>
+</html>
+
